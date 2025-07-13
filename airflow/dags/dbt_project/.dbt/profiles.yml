@@ -1,0 +1,31 @@
+cheapshark:
+  target: dev
+  outputs:
+    dev:
+      type: trino
+      method: none  # ou ldap/kerberos se usar autenticação
+      user: dbt_user
+      host: trino-datalake-trino-1  # ou seu host do Trino
+      port: 8080
+      catalog: cheapshark_iceberg
+      schema: data_warehouse
+      threads: 4
+      http_scheme: http
+      session_properties:
+        query_max_run_time: "1h"
+        join_reordering_strategy: "AUTOMATIC"
+
+    
+    prod:
+      type: trino
+      method: none
+      user: dbt_user
+      host: trino-datalake-trino-1
+      port: 8080
+      catalog: cheapshark_iceberg
+      schema: silver
+      threads: 8
+      http_scheme: http
+      session_properties:
+        query_max_run_time: "1h"
+        join_reordering_strategy: "AUTOMATIC"

@@ -1,0 +1,82 @@
+version: 2
+
+sources:
+  - name: staging
+    description: "Dados brutos da API CheapShark"
+    database: cheapshark_staging
+    schema: staging
+    tables:
+      - name: deals
+        description: "Ofertas de jogos"
+        columns:
+          - name: dealID
+            description: "ID único da oferta"
+            tests:
+              - not_null
+              - unique
+          - name: storeID
+            description: "ID da loja"
+            tests:
+              - not_null
+          - name: gameID
+            description: "ID do jogo"
+            tests:
+              - not_null
+      
+      - name: games
+        description: "Informações dos jogos"
+        columns:
+          - name: gameID
+            description: "ID único do jogo"
+            tests:
+              - not_null
+              - unique
+      
+      - name: stores
+        description: "Informações das lojas"
+        columns:
+          - name: storeID
+            description: "ID único da loja"
+            tests:
+              - not_null
+              - unique
+
+models:
+  - name: bronze_deals
+    description: "Tabela bronze de ofertas com limpeza básica"
+    columns:
+      - name: dealID
+        description: "ID único da oferta"
+        tests:
+          - not_null
+          - unique
+      - name: processed_at
+        description: "Timestamp de processamento"
+        tests:
+          - not_null
+
+  - name: bronze_games
+    description: "Tabela bronze de jogos com limpeza básica"
+    columns:
+      - name: gameID
+        description: "ID único do jogo"
+        tests:
+          - not_null
+          - unique
+      - name: processed_at
+        description: "Timestamp de processamento"
+        tests:
+          - not_null
+
+  - name: bronze_stores
+    description: "Tabela bronze de lojas com limpeza básica"
+    columns:
+      - name: storeID
+        description: "ID único da loja"
+        tests:
+          - not_null
+          - unique
+      - name: processed_at
+        description: "Timestamp de processamento"
+        tests:
+          - not_null

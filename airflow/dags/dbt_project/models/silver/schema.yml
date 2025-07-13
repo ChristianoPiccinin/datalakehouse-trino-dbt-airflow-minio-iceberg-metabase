@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: silver_deals
+    description: "Tabela silver de ofertas"
+    columns:
+      - name: internalName
+        description: "Nome interno do jogo"
+        tests:
+          - not_null
+          - unique
+
+
+  - name: silver_stores
+    description: "Tabela silver de lojas"
+    columns:
+      - name: storeID
+        description: "ID da loja"
+        tests:
+          - not_null
+          - unique

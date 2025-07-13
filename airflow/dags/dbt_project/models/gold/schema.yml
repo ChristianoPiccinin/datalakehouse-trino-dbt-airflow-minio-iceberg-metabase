@@ -1,0 +1,105 @@
+version: 2
+
+models:
+  - name: gold_deals_by_store
+    description: "Agregação de ofertas por loja"
+    columns:
+      - name: storeID
+        description: "ID da loja"
+        tests:
+          - not_null
+          - unique
+      - name: storeName
+        description: "Nome da loja"
+      - name: total_deals
+        description: "Total de ofertas"
+      - name: avg_discount
+        description: "Desconto médio em porcentagem"
+      - name: avg_price
+        description: "Preço médio após desconto"
+      - name: min_price
+        description: "Menor preço"
+      - name: max_price
+        description: "Maior preço"
+
+  - name: gold_top_games
+    description: "Top jogos com melhores avaliações e ofertas"
+    columns:
+      - name: gameID
+        description: "ID do jogo"
+        tests:
+          - not_null
+          - unique
+      - name: title
+        description: "Título do jogo"
+      - name: metacriticScore
+        description: "Pontuação no Metacritic"
+      - name: steamRatingPercent
+        description: "Porcentagem de avaliações positivas no Steam"
+      - name: best_deal_price
+        description: "Melhor preço disponível"
+      - name: best_deal_store
+        description: "Loja com melhor preço"
+      - name: savings
+        description: "Economia em porcentagem"
+
+  - name: gold_deals_metrics
+    description: "Métricas gerais sobre ofertas"
+    columns:
+      - name: date
+        description: "Data da métrica"
+        tests:
+          - not_null
+          - unique
+      - name: total_active_deals
+        description: "Total de ofertas ativas"
+      - name: avg_discount_percentage
+        description: "Desconto médio em porcentagem"
+      - name: total_stores_with_deals
+        description: "Total de lojas com ofertas"
+      - name: most_discounted_category
+        description: "Categoria com maior desconto médio"
+        
+  - name: gold_price_history
+    description: "Histórico de preços dos jogos ao longo do tempo"
+    columns:
+      - name: id
+        description: "ID único do registro"
+        tests:
+          - not_null
+          - unique
+      - name: gameID
+        description: "ID do jogo"
+      - name: title
+        description: "Título do jogo"
+      - name: price
+        description: "Preço atual"
+      - name: original_price
+        description: "Preço original"
+      - name: discount_percentage
+        description: "Porcentagem de desconto"
+      - name: price_date
+        description: "Data do registro de preço"
+        
+  - name: gold_store_performance
+    description: "Análise de desempenho das lojas"
+    columns:
+      - name: storeID
+        description: "ID da loja"
+        tests:
+          - not_null
+          - unique
+      - name: storeName
+        description: "Nome da loja"
+      - name: total_deals
+        description: "Total de ofertas"
+      - name: avg_discount
+        description: "Desconto médio em porcentagem"
+      - name: high_discount_deals
+        description: "Número de ofertas com alto desconto (>50%)"
+      - name: pct_high_discount
+        description: "Porcentagem de ofertas com alto desconto"
+      - name: avg_deal_rating
+        description: "Avaliação média das ofertas"
+      - name: performance_category
+        description: "Categoria de desempenho da loja" 

@@ -1,0 +1,3 @@
+astronomer-cosmos
+dbt-trino
+apache-airflow-providers-trino
