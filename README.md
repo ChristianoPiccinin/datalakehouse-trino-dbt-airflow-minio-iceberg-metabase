@@ -2,6 +2,15 @@
 
 Este projeto implementa uma solução moderna de data lake utilizando o padrão de arquitetura Medallion com Iceberg, dbt, Trino, Airflow, MinIO, Metabase e Docker.
 
+## Fluxo de Dados
+
+1. Dados brutos são ingeridos no MinIO (camada Bronze)
+2. Airflow orquestra o pipeline de processamento
+3. Trino lê dados do MinIO
+4. dbt transforma dados através das camadas medallion
+5. Dados transformados são armazenados de volta no MinIO como tabelas Iceberg
+6. Metabase conecta-se ao Trino para análises e visualização
+
 ## Visão Geral da Arquitetura
 
 O projeto segue a arquitetura Medallion (Bronze, Silver, Gold) para processamento de dados:
@@ -95,15 +104,6 @@ docker-compose up -d
 - MinIO: http://localhost:9000
 - Metabase: http://localhost:3000
 - Trino: http://localhost:8989
-
-## Fluxo de Dados
-
-1. Dados brutos são ingeridos no MinIO (camada Bronze)
-2. Airflow orquestra o pipeline de processamento
-3. Trino lê dados do MinIO
-4. dbt transforma dados através das camadas medallion
-5. Dados transformados são armazenados de volta no MinIO como tabelas Iceberg
-6. Metabase conecta-se ao Trino para análises e visualização
 
 ## Configuração
 
