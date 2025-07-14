@@ -91,7 +91,7 @@ trino-datalake/
 1. Clone o repositório:
 ```bash
 git clone https://github.com/vitordarcidasilva/datalakehouse-trino-dbt-airflow-minio-iceberg-metabase.git
-cd trino-datalake
+cd datalakehouse-trino-dbt-airflow-minio-iceberg-metabase
 ```
 
 2. Inicie os serviços:
