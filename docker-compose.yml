@@ -14,7 +14,7 @@ services:
       - ./trino/etc/trino/catalog:/etc/trino/catalog
     networks:
       - datalake-network
-
+    restart: unless-stopped
 
   postgres:
     container_name: postgres
@@ -30,7 +30,7 @@ services:
       - ./postgres/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     networks:
       - datalake-network
-
+    restart: unless-stopped
 
   airflow:
     container_name: airflow-container
@@ -43,13 +43,13 @@ services:
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow_db
     volumes:
       - ./airflow/dags:/opt/airflow/dags
-      
     depends_on:
       - postgres
     networks:
       - datalake-network
     command: >
       bash -c "airflow db migrate && airflow standalone"
+    restart: unless-stopped
 
   minio:
     image: minio/minio
@@ -65,6 +65,7 @@ services:
       - ./minio/data:/data
     networks:
       - datalake-network
+    restart: unless-stopped
 
   metastore_db:
     image: postgres:11
@@ -78,7 +79,7 @@ services:
     command: [ "postgres", "-c", "wal_level=logical" ]
     networks:
       - datalake-network
-
+    restart: unless-stopped
 
   hive-metastore:
     hostname: hive-metastore
@@ -116,8 +117,8 @@ services:
       test: bash -c "exec 6<> /dev/tcp/localhost/9083"
     networks:
       - datalake-network
+    restart: unless-stopped
 
-  # PostgreSQL para o Metabase
   postgres-metabase:
     image: postgres:13
     container_name: postgres-metabase
@@ -131,6 +132,7 @@ services:
       - ./postgres-metabase/data:/var/lib/postgresql/data
     networks:
       - datalake-network
+    restart: unless-stopped
 
   metabase:
     image: metabase/metabase:latest
@@ -138,14 +140,12 @@ services:
     ports:
       - 3000:3000
     environment:
-      # Configuração para armazenar dados do Metabase no PostgreSQL
       - MB_DB_TYPE=postgres
       - MB_DB_DBNAME=metabase
       - MB_DB_PORT=5432
       - MB_DB_USER=metabase
       - MB_DB_PASS=metabase123
       - MB_DB_HOST=postgres-metabase
-      # Configuração para conexão com o Trino (para consultas)
       - MB_TRINO_HOST=trino
       - MB_TRINO_PORT=8080
       - MB_TRINO_USER=trino
@@ -157,7 +157,7 @@ services:
       - trino
     networks:
       - datalake-network
-
+    restart: unless-stopped
 
 volumes:
   airflow_data:
@@ -167,4 +167,4 @@ volumes:
 
 networks:
   datalake-network:
-    name: trino-iceberg-hive-network  
+    name: trino-iceberg-hive-network
